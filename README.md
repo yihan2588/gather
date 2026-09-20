@@ -1,7 +1,5 @@
 # Gather · Tutor session reporting
 
-A first-version implementation for the Columbia Software Solutions take-home: tutors record attendance and achievements; staff manage assignments, review monthly attendance, and export reports.
-
 **Stack:** Next.js App Router, strict TypeScript, Supabase PostgreSQL/Auth, Google OAuth, Tailwind CSS, selected shadcn/ui components, Zod, and Vercel deployment configuration.
 
 ## Try it locally

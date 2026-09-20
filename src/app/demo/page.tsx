@@ -19,7 +19,7 @@ export default async function Demo() {
             <input type="hidden" name="persona" value={persona} />
             <h2>{name}</h2>
             <p>{description}</p>
-            <Button type="submit">Continue as {name}</Button>
+            <Button type="submit">Continue as {name.split(" · ")[0]}</Button>
           </form>
         ))}
       </div>

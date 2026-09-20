@@ -299,12 +299,12 @@ test("reviewers switch between example tutor and staff accounts", async ({ page 
   await login(page);
   await page.getByRole("link", {name: "Switch demo account"}).click();
   await expect(page.getByRole("heading", {name: "Choose a demo account"})).toBeVisible();
-  await page.getByRole("button", {name:"Continue as Sam · Staff",exact:true}).click();
+  await page.getByRole("button", {name:"Continue as Sam",exact:true}).click();
   await expect(page.getByRole("heading", {name:"Activity summary",exact:true})).toBeVisible();
   await page.getByRole("link", {name:"Switch demo account"}).click();
-  await page.getByRole("button", {name:"Continue as Jordan · Pending approval",exact:true}).click();
+  await page.getByRole("button", {name:"Continue as Jordan",exact:true}).click();
   await expect(page.getByRole("heading", {name:"Awaiting approval"})).toBeVisible();
   await page.getByRole("link", {name:"Switch demo account"}).click();
-  await page.getByRole("button", {name:"Continue as Maya · Tutor",exact:true}).click();
+  await page.getByRole("button", {name:"Continue as Maya",exact:true}).click();
   await expect(page.getByRole("heading", {name:"My students",exact:true})).toBeVisible();
 });

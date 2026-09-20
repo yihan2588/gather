@@ -26,6 +26,7 @@ test("tutor records attendance, staff finds it in the downloaded report", async 
   await page.waitForURL("**/login");
   await login(page, "Sam · Staff");
   await page
+    .getByRole("navigation", { name: "Main navigation" })
     .getByRole("link", { name: "Monthly reports", exact: true })
     .click();
   await page.waitForURL("**/staff/reports");
@@ -277,6 +278,7 @@ test("staff returns to Activity summary, jumps to current month, and exports wit
     "2026-09",
   );
   await page
+    .getByRole("navigation", { name: "Main navigation" })
     .getByRole("link", { name: "Monthly reports", exact: true })
     .click();
   await page.waitForURL("**/staff/reports");

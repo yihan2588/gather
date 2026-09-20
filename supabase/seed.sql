@@ -1,6 +1,6 @@
 -- Fictional domain fixtures only. No Auth identities or privileged accounts.
 insert into public.terms(id,name,starts_on,ends_on) values('30000000-0000-4000-8000-000000000001','FY 2026–2027','2026-07-01','2027-06-30') on conflict do nothing;
-insert into public.students(id,display_name) values('20000000-0000-4000-8000-000000000001','Ana Morales'),('20000000-0000-4000-8000-000000000002','Ben Park') on conflict do nothing;
+insert into public.students(id,display_name) values('20000000-0000-4000-8000-000000000001','Ana Morales'),('20000000-0000-4000-8000-000000000002','Ben Park'),('20000000-0000-4000-8000-000000000003','Clara Nguyen') on conflict do nothing;
 insert into public.goal_types(id,category,label,display_order,source_asterisk) values
 ('A1','Economic','Enter Employment',1,true),('A2','Economic','Retain Employment',2,true),('A3','Economic','Leave public assistance',3,false),
 ('B1','Educational','Achieve work-based project learner goal',4,false),('B2','Educational','Enter Occupational Skills Training Program',5,true),('B3','Educational','Enter Postsecondary Education',6,true),('B4','Educational','Obtain High School Diploma',7,true),

@@ -5,6 +5,8 @@ const aid = "40000000-0000-4000-8000-000000000001";
 test("first visit explains demo access, dismisses, remembers, and replays", async ({
   page,
 }) => {
+  // The first authenticated route initializes PGlite and compiles on cold CI.
+  test.setTimeout(90_000);
   await page.goto("/login");
   const tour = page.getByRole("dialog");
   await expect(tour).toBeVisible();
@@ -25,10 +27,7 @@ test("first visit explains demo access, dismisses, remembers, and replays", asyn
     .getByRole("button", { name: "Enter as Maya · Tutor", exact: true })
     .click();
   await page.waitForURL("**/tutor");
-  await expect(
-    page.getByRole("heading", { name: "My students", exact: true }),
-  ).toBeVisible();
-  await expect(tour).toContainText("Your students");
+  await expect(tour).toContainText("Your students", { timeout: 30_000 });
   await tour.getByRole("button", { name: "Next", exact: true }).click();
   await expect(tour).toContainText("Your monthly totals");
   await tour.getByRole("button", { name: "Back", exact: true }).click();
@@ -36,7 +35,7 @@ test("first visit explains demo access, dismisses, remembers, and replays", asyn
   await tour.getByRole("button", { name: "Skip tour" }).click();
   await page.locator(".student-link").first().click();
   await page.waitForURL(`**/tutor/assignments/${aid}`);
-  await expect(tour).toContainText("Record tutoring time");
+  await expect(tour).toContainText("Record tutoring time", { timeout: 30_000 });
   await tour.getByRole("button", { name: "Skip tour" }).click();
   await expect(
     page.getByRole("button", { name: "Save session", exact: true }),

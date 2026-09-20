@@ -33,7 +33,7 @@ export default async function People({
       <PageHeader title="People & assignments" />
       <section className="panel">
         <div className="section-heading">
-          <h2>Volunteer tutors</h2>
+          <h2 data-tour="tutors">Volunteer tutors</h2>
           <span className="muted">{tutors.length} accounts</span>
         </div>
         {!tutors.length && (
@@ -97,7 +97,7 @@ export default async function People({
           />
         </section>
         <section className="panel">
-          <h2>Assign a tutor</h2>
+          <h2 data-tour="assign">Assign a tutor</h2>
           {data.terms.length &&
           tutors.some((t) => t.status === "active") &&
           data.students.length ? (

@@ -77,7 +77,7 @@ export default async function Assignment({
       <div>
         <section className="panel">
           <div className="section-heading">
-            <h2>Record a session</h2>
+            <h2 data-tour="record-session">Record a session</h2>
           </div>
           <ActionForm
             operation="create_attendance"

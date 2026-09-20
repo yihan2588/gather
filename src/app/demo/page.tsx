@@ -1,3 +1,4 @@
+import { QuickTour } from "@/components/quick-tour";
 import { redirect } from "next/navigation";
 import { identity } from "@/lib/data";
 import { reviewerDemo, demoAccounts } from "@/lib/reviewer-demo";
@@ -9,13 +10,19 @@ export default async function Demo() {
   return (
     <main id="main" className="standalone">
       <h1>Choose a demo account</h1>
+      <QuickTour demo />
       <p>
         Explore the tutor and staff workflows. Changes to these fictional
         records are shared with other reviewers.
       </p>
       <div className="demo-account-grid">
         {demoAccounts.map(([persona, name, description]) => (
-          <form action={switchDemoAccount} key={persona} className="panel">
+          <form
+            action={switchDemoAccount}
+            key={persona}
+            className="panel"
+            data-tour={`persona-${persona}`}
+          >
             <input type="hidden" name="persona" value={persona} />
             <h2>{name}</h2>
             <p>{description}</p>

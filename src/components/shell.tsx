@@ -1,3 +1,4 @@
+import { QuickTour } from "@/components/quick-tour";
 import Link from "next/link";
 import { reviewerDemo } from "@/lib/reviewer-demo";
 import { BookOpen, Users, FileBarChart, LogOut } from "lucide-react";
@@ -39,7 +40,7 @@ export async function Shell({
           gather<span className="brand-dot">.</span>
         </Link>
         <div className="organization">
-          LVA ESSEX / PASSAIC<span>Tutor reporting workspace</span>
+          Tutor reporting workspace
         </div>
         <span className="nav-label">
           {staff ? "PROGRAM MANAGEMENT" : "YOUR WORKSPACE"}
@@ -59,7 +60,7 @@ export async function Shell({
           ))}
         </nav>
         {demo.allowed && (
-          <Link href="/demo" className="nav-item">
+          <Link href="/demo" className="nav-item" data-tour="switch">
             Switch demo account
           </Link>
         )}
@@ -90,14 +91,15 @@ export async function Shell({
               ? "LOCAL DEMO · FICTIONAL DATA"
               : demo.allowed
                 ? "SHARED DEMO · FICTIONAL DATA"
-                : "LITERACY VOLUNTEERS OF AMERICA"}
+                : "TUTOR REPORTING WORKSPACE"}
           </span>
+          <QuickTour demo={demo.allowed} />
         </header>
         <main id="main" className="main-content">
           {children}
         </main>
         <footer>
-          <span>LVAEP · Session reporting</span>
+          <span>Gather · Session reporting</span>
         </footer>
       </div>
     </div>

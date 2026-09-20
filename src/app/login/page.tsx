@@ -1,3 +1,4 @@
+import { QuickTour } from "@/components/quick-tour";
 import { reviewerDemo } from "@/lib/reviewer-demo";
 import { BookOpen, ArrowRight, Check } from "lucide-react";
 import { signIn, demoSignIn } from "@/app/actions";
@@ -30,11 +31,11 @@ export default async function Login({
             </div>
           </div>
         </div>
-        <small>Literacy Volunteers of America · Essex & Passaic County</small>
       </section>
       <section className="login-panel">
         <div className="login-card">
           <h2>Sign in to Gather</h2>
+          <QuickTour demo={demo.enabled || localDemo()} local={localDemo()} />
           {error && (
             <p role="alert" className="form-message failure">
               {error === "setup"

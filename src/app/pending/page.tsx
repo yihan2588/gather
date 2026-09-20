@@ -1,3 +1,4 @@
+import { QuickTour } from "@/components/quick-tour";
 import Link from "next/link";
 import { reviewerDemo } from "@/lib/reviewer-demo";
 import { identity, call } from "@/lib/data";
@@ -16,6 +17,7 @@ export default async function Pending() {
   return (
     <main id="main" className="standalone">
       <Clock3 size={36} />
+      <QuickTour demo={demo.allowed} />
       <h1>
         {member?.status === "disabled"
           ? "Your access is paused."

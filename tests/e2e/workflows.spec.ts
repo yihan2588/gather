@@ -1,4 +1,21 @@
 import { test, expect, type Page } from "@playwright/test";
+// Existing workflow tests opt out; orientation behavior has its own browser tests.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    for (const id of [
+      "demo-login",
+      "login",
+      "accounts",
+      "tutor",
+      "sessions",
+      "staff",
+      "people",
+      "reports",
+      "pending",
+    ])
+      localStorage.setItem(`gather:tour:v1:${id}`, "done");
+  });
+});
 const aid = "40000000-0000-4000-8000-000000000001";
 async function login(page: Page, who = "Maya · Tutor") {
   await page.goto("/login");

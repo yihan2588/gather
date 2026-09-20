@@ -36,7 +36,7 @@ export function AchievementPanel({
   return (
     <section className="panel">
       <div className="section-heading">
-        <h2>
+        <h2 data-tour="achievements">
           <Award size={21} /> Student achievements
         </h2>
       </div>

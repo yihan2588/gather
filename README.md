@@ -15,14 +15,24 @@ For Google sign-in with Supabase, copy `.env.example` to `.env.local`, configure
 
 ## Implemented workflows
 
-- Tutor session entry, corrections, voiding, duplicate-request protection, and conflict detection.
-- Live monthly totals, including assignments with zero recorded sessions.
-- Staff approval/pausing of tutors, student records, assignments, site/schedule, and ended tutoring.
-- Internal absence/holiday codes and dated student achievements using the source form's goals.
-- SQL monthly aggregation and summary, detail, and achievement CSV downloads.
-- Database-enforced permissions and dynamic, private authenticated pages.
-- Staff monthly activity grid with daily session counts and tutor/student details. Tutors use a compact month filter.
-- Responsive tutor/staff interfaces with explicit saved, error, loading, and empty states.
+### Tutors: record sessions and track student progress
+
+1. After staff approval and assignment, open **My students** to see assigned students and their tutoring schedules.
+2. Select a student to record a session date and duration, or add a dated achievement using the source form's goals.
+3. Choose a month to review sessions and total hours. Correct an entry or void a mistake without erasing its history. Students with no recorded sessions remain visible.
+
+### Staff: organize tutoring and prepare monthly reports
+
+1. Open **Activity summary** for a monthly overview. Select a day to see its tutor–student pairs and session durations.
+2. Use **People & assignments** to approve or pause tutors, maintain student records, assign tutors, and set meeting sites and schedules. Record when a tutoring assignment ends.
+3. Review a student's records, make corrections, and record internal absence or holiday codes when needed.
+4. Open **Monthly reports**, select the month and filters, and download attendance summaries, session details, or student achievements as CSV files. Totals update from recorded sessions, including assignments with zero sessions.
+
+### Access and safeguards
+
+In normal use, new accounts wait for staff approval; approved tutors access their assigned records, while staff manage the program. The demo lets reviewers sign in with Google or continue as a guest, then switch between fictional tutor, staff, and pending accounts.
+
+Database permissions protect records. Duplicate-request protection prevents retries from saving the same session twice, and conflict detection prevents silently overwriting another edit. Both interfaces support mobile screens and show saved, error, loading, and empty states.
 
 ## Read the project
 

@@ -46,4 +46,3 @@ pnpm test:e2e
 
 Stop the development server before browser tests. CI installs Chromium; local tests use installed Chrome. No live provider credentials are required for local database/browser tests.
 
-**Deployment status:** Supabase and Google OAuth configuration and Vercel authentication must be completed before the hosted application can be verified. Local demo results do not establish hosted authentication or production readiness.

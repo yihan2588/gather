@@ -90,7 +90,7 @@ export async function Shell({
             {localDemo()
               ? "LOCAL DEMO · FICTIONAL DATA"
               : demo.allowed
-                ? "SHARED DEMO · FICTIONAL DATA"
+                ? "DEMO · FICTIONAL DATA"
                 : "TUTOR REPORTING WORKSPACE"}
           </span>
           <QuickTour demo={demo.allowed} />

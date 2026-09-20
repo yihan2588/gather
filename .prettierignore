@@ -1,0 +1,8 @@
+node_modules
+.next
+.local-demo
+pnpm-lock.yaml
+src/lib/database.types.ts
+/supabase/
+AGENTS.md
+CLAUDE.md

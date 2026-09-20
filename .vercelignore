@@ -1,0 +1,6 @@
+.local-demo
+.pnpm-store
+.env*
+!.env.example
+test-results
+playwright-report

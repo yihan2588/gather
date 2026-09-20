@@ -1,3 +1,4 @@
+import { reviewerDemo } from "@/lib/reviewer-demo";
 import { BookOpen, ArrowRight, Check } from "lucide-react";
 import { signIn, demoSignIn } from "@/app/actions";
 import { localDemo } from "@/lib/local-demo";
@@ -9,6 +10,7 @@ export default async function Login({
   searchParams: Promise<{ error?: string }>;
 }) {
   const { error } = await searchParams;
+  const demo = await reviewerDemo();
   return (
     <main id="main" className="login-layout">
       <section className="login-story">
@@ -58,7 +60,10 @@ export default async function Login({
             </div>
           ) : null}
           <div className="login-trust">
-            <Check size={15} /> Access is approved by your program staff.
+            <Check size={15} />{" "}
+            {demo.enabled && !localDemo()
+              ? "Sign in to explore the tutor and staff demo."
+              : "Access is approved by your program staff."}
           </div>
           {localDemo() && (
             <div className="demo-options">

@@ -294,3 +294,17 @@ test("staff returns to Activity summary, jumps to current month, and exports wit
   expect(csv).not.toMatch(/confirmation_status|confirmed_at|confirmed_by/);
   expect(csv).toContain("Ana Morales");
 });
+
+test("reviewers switch between example tutor and staff accounts", async ({ page }) => {
+  await login(page);
+  await page.getByRole("link", {name: "Switch demo account"}).click();
+  await expect(page.getByRole("heading", {name: "Choose a demo account"})).toBeVisible();
+  await page.getByRole("button", {name:"Continue as Sam · Staff",exact:true}).click();
+  await expect(page.getByRole("heading", {name:"Activity summary",exact:true})).toBeVisible();
+  await page.getByRole("link", {name:"Switch demo account"}).click();
+  await page.getByRole("button", {name:"Continue as Jordan · Pending approval",exact:true}).click();
+  await expect(page.getByRole("heading", {name:"Awaiting approval"})).toBeVisible();
+  await page.getByRole("link", {name:"Switch demo account"}).click();
+  await page.getByRole("button", {name:"Continue as Maya · Tutor",exact:true}).click();
+  await expect(page.getByRole("heading", {name:"My students",exact:true})).toBeVisible();
+});

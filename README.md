@@ -46,3 +46,4 @@ pnpm test:e2e
 
 Stop the development server before browser tests. CI installs Chromium; local tests use installed Chrome. No live provider credentials are required for local database/browser tests.
 
+**Hosted demo:** https://gather-yihan2588.vercel.app — dedicated Supabase and Vercel projects are configured. Google reviewers can choose tutor or staff example accounts in the shared fictional-data walkthrough. See the [setup guide](docs/03-running-and-deploying.md#shared-reviewer-demo) for the explicit demo access mode.

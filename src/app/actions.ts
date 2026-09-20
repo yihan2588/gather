@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient, configured } from "@/lib/supabase/server";
+import { reviewerDemo, demoAccounts } from "@/lib/reviewer-demo";
 import { localDemo, IDS } from "@/lib/local-demo";
 import { call, requireMember, AccessError } from "@/lib/data";
 import { schemas, type Operation } from "@/lib/validation";
@@ -73,6 +74,7 @@ export async function signIn() {
   redirect(data.url);
 }
 export async function signOut() {
+  (await cookies()).delete("gather-persona");
   if (localDemo()) (await cookies()).delete("lvaep-demo");
   else if (configured()) {
     const c = await createClient();
@@ -98,5 +100,28 @@ export async function demoSignIn(form: FormData) {
   });
   redirect(
     role === "staff" ? "/staff" : role === "pending" ? "/pending" : "/tutor",
+  );
+}
+
+export async function switchDemoAccount(form: FormData) {
+  const persona = String(form.get("persona"));
+  if (!demoAccounts.some(([name]) => name === persona))
+    throw new Error("Unknown demo account");
+  if (localDemo()) return demoSignIn(form);
+  const demo = await reviewerDemo();
+  if (!demo.allowed) redirect("/login");
+  (await cookies()).set("gather-persona", persona, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+  });
+  revalidatePath("/", "layout");
+  redirect(
+    persona === "staff"
+      ? "/staff"
+      : persona === "pending"
+        ? "/pending"
+        : "/tutor",
   );
 }

@@ -18,7 +18,11 @@ export async function identity() {
   if (!configured()) return null;
   const c = await createClient();
   const { data, error } = await c.auth.getUser();
-  return error ? null : (data.user?.id ?? null);
+  if (error || !data.user) return null;
+  const { data: demo, error: demoError } = await c.rpc("demo_context");
+  if (demoError) throw demoError;
+  const review = demo as { allowed: boolean; actor_id: string | null };
+  return review.allowed ? review.actor_id : data.user.id;
 }
 export async function call<T>(
   name: keyof Database["public"]["Functions"],

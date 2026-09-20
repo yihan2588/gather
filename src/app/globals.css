@@ -1537,3 +1537,16 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+.demo-account-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  width: min(100%, 720px);
+  margin: 1.5rem auto;
+}
+.demo-account-grid .panel { padding: 1.5rem; }
+.demo-account-grid h2 { font-size: 1.1rem; }
+.demo-account-grid p { margin: .5rem 0 1rem; }
+.demo-account-grid button { white-space: normal; height: auto; min-height: 2.5rem; }
+@media (max-width: 600px) { .demo-account-grid { grid-template-columns: 1fr; } }

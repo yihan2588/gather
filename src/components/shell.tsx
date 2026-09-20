@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { reviewerDemo } from "@/lib/reviewer-demo";
 import { BookOpen, Users, FileBarChart, LogOut } from "lucide-react";
 import { signOut } from "@/app/actions";
 import { localDemo } from "@/lib/local-demo";
 import type { Row } from "@/lib/domain";
-export function Shell({
+export async function Shell({
   member,
   active,
   children,
@@ -12,6 +13,7 @@ export function Shell({
   active: string;
   children: React.ReactNode;
 }) {
+  const demo = await reviewerDemo();
   const staff = member.role === "staff";
   const links = staff
     ? [
@@ -56,6 +58,11 @@ export function Shell({
             </Link>
           ))}
         </nav>
+        {demo.allowed && (
+          <Link href="/demo" className="nav-item">
+            Switch demo account
+          </Link>
+        )}
         <div className="profile">
           <span className="avatar">
             {member.display_name
@@ -81,7 +88,9 @@ export function Shell({
             <span className="live-dot" />{" "}
             {localDemo()
               ? "LOCAL DEMO · FICTIONAL DATA"
-              : "LITERACY VOLUNTEERS OF AMERICA"}
+              : demo.allowed
+                ? "SHARED DEMO · FICTIONAL DATA"
+                : "LITERACY VOLUNTEERS OF AMERICA"}
           </span>
         </header>
         <main id="main" className="main-content">

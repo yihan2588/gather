@@ -14,6 +14,11 @@ export async function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
     {
+      global: {
+        headers: {
+          "x-gather-persona": jar.get("gather-persona")?.value ?? "tutor",
+        },
+      },
       cookies: {
         getAll: () => jar.getAll(),
         setAll(values) {

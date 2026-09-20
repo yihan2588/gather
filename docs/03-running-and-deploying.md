@@ -105,3 +105,36 @@ Repository deployment settings are in `vercel.json`. The GitHub Actions workflow
 - AI/agent tooling is used in development. No student records are sent to an AI service by the application.
 
 Primary references: [Supabase SSR](https://supabase.com/docs/guides/auth/server-side/nextjs), [Google provider](https://supabase.com/docs/guides/auth/social-login/auth-google), [RLS](https://supabase.com/docs/guides/database/postgres/row-level-security), [Vercel environments](https://vercel.com/docs/deployments/environments).
+
+## Shared reviewer demo
+
+The dedicated Gather demo permits every authenticated Google account to explore
+all four fictional personas at `/demo`. Each workspace has a Switch demo account
+link. Reviewers share the sample records and may modify them; never load real
+student data into this deployment.
+
+The migration defaults this feature to OFF. After applying migrations and
+`supabase/seed.sql`, an operator may explicitly run `supabase/demo.sql` on the
+fictional-data demo project. It seeds non-login example identities, assignments,
+and attendance, then enables `private.demo_settings`. To restore normal access:
+
+```sql
+update private.demo_settings set enabled=false where singleton;
+```
+
+Google reviewers keep their real Supabase sessions. A database helper checks a
+server-maintained Google identity before mapping a request's `x-gather-persona`
+header to one of four operator-controlled example identities. Without that check,
+the header cannot confer access. All existing role checks, validation, RLS, and
+RPC write rules use the resolved acting identity; no service-role runtime key or
+PostgreSQL role switch is used. The persona cookie chooses a demo view, not an
+OAuth identity. Example records attribute edits to the example persona.
+
+A restrictive membership policy hides actual reviewer profiles from demo staff,
+and membership mutations reject non-example accounts. Anonymous users cannot
+read records or call mutation RPCs. Turning demo mode off restores the original
+pending approval behavior without altering reviewers' real membership roles.
+
+The four example Auth rows have no password or OAuth identities. They cannot be
+used for Google login; only a verified Google reviewer can act through them.
+Do not modify the Google OAuth client or rotate credentials to enable this feature.

@@ -20,7 +20,7 @@ function pageTour(
   const switchAccount = step(
     '[data-tour="switch"]',
     "Try another role",
-    "Switch demo account lets you explore the same fictional records as a tutor or staff member. Changes are shared with other reviewers.",
+    "Switch demo account lets you explore the same fictional records as a tutor or staff member.",
   );
   if (path === "/login")
     return {

@@ -11,10 +11,7 @@ export default async function Demo() {
     <main id="main" className="standalone">
       <h1>Choose a demo account</h1>
       <QuickTour demo />
-      <p>
-        Explore the tutor and staff workflows. Changes to these fictional
-        records are shared with other reviewers.
-      </p>
+      <p>Explore the tutor and staff workflows.</p>
       <div className="demo-account-grid">
         {demoAccounts.map(([persona, name, description]) => (
           <form

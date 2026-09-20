@@ -24,6 +24,10 @@ test("first visit explains demo access, dismisses, remembers, and replays", asyn
   await page
     .getByRole("button", { name: "Enter as Maya · Tutor", exact: true })
     .click();
+  await page.waitForURL("**/tutor");
+  await expect(
+    page.getByRole("heading", { name: "My students", exact: true }),
+  ).toBeVisible();
   await expect(tour).toContainText("Your students");
   await tour.getByRole("button", { name: "Next", exact: true }).click();
   await expect(tour).toContainText("Your monthly totals");
@@ -31,6 +35,7 @@ test("first visit explains demo access, dismisses, remembers, and replays", asyn
   await expect(tour).toContainText("Your students");
   await tour.getByRole("button", { name: "Skip tour" }).click();
   await page.locator(".student-link").first().click();
+  await page.waitForURL(`**/tutor/assignments/${aid}`);
   await expect(tour).toContainText("Record tutoring time");
   await tour.getByRole("button", { name: "Skip tour" }).click();
   await expect(
@@ -38,20 +43,22 @@ test("first visit explains demo access, dismisses, remembers, and replays", asyn
   ).toBeEnabled();
 });
 
-test("all tour steps fit desktop and mobile, trap focus, and leave forms usable", async ({
-  page,
-}) => {
-  await page.goto("/login");
-  await page
-    .getByRole("dialog")
-    .getByRole("button", { name: "Got it" })
-    .click();
-  await page
-    .getByRole("button", { name: "Enter as Sam · Staff", exact: true })
-    .click();
-  await page.waitForURL("**/staff");
-  await expect(page.locator(".page-heading h1")).toBeVisible();
-  for (const width of [1280, 375, 320]) {
+for (const width of [1280, 375, 320]) {
+  test(`all tour steps fit at ${width}px, trap focus, and leave forms usable`, async ({
+    page,
+  }) => {
+    // Each viewport gets its own budget, including cold dev-server compilation.
+    test.setTimeout(90_000);
+    await page.goto("/login");
+    await page
+      .getByRole("dialog")
+      .getByRole("button", { name: "Got it" })
+      .click();
+    await page
+      .getByRole("button", { name: "Enter as Sam · Staff", exact: true })
+      .click();
+    await page.waitForURL("**/staff");
+    await expect(page.locator(".page-heading h1")).toBeVisible();
     const height = width === 320 ? 568 : 812;
     await page.setViewportSize({ width, height });
     for (const route of [
@@ -96,8 +103,8 @@ test("all tour steps fit desktop and mobile, trap focus, and leave forms usable"
         else await tour.getByRole("button", { name: "Got it" }).click();
       }
     }
-  }
-});
+  });
+}
 
 test("opening and dismissing the login tour keeps the page stationary", async ({
   page,

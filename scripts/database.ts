@@ -14,7 +14,7 @@ export const IDS = {
 };
 export async function migrate(db: PGlite, through?: string) {
   await db.exec(`create schema auth; create role anon nologin; create role authenticated nologin; grant usage on schema public,auth to authenticated;
- create table auth.users(id uuid primary key,email text,raw_user_meta_data jsonb default '{}');
+ create table auth.users(id uuid primary key,email text,raw_user_meta_data jsonb default '{}',is_anonymous boolean not null default false);
  create table auth.identities(user_id uuid references auth.users(id),provider text);
  create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$; grant execute on function auth.uid() to authenticated;`);
   await applyMigrations(db, false, through);
@@ -26,7 +26,12 @@ export async function applyMigrations(
   legacy = false,
   through?: string,
 ) {
-  await db.exec("create table if not exists auth.identities(user_id uuid references auth.users(id),provider text)");
+  await db.exec(
+    "alter table auth.users add column if not exists is_anonymous boolean not null default false",
+  );
+  await db.exec(
+    "create table if not exists auth.identities(user_id uuid references auth.users(id),provider text)",
+  );
   await db.exec(
     "create schema if not exists local_runtime; create table if not exists local_runtime.local_migrations(name text primary key)",
   );

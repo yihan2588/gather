@@ -31,12 +31,12 @@ function pageTour(
           local
             ? "Explore the local preview"
             : demo
-              ? "Explore with your Google account"
+              ? "Explore the demo"
               : "Sign in with Google",
           local
-            ? "Choose an example account below to explore the local preview. For this demo, continue with any Google account to try all roles. In actual use, Google OAuth verifies your identity; program staff approve access, and roles and assignments determine which records each person can see."
+            ? "Choose an example account below to explore the local preview. For this demo, continue with any Google account or as a guest to try all roles. Guest access is demo-only. In actual use, Google OAuth will be required; other authentication methods can be adapted to the client’s needs. Program staff approve access and assign roles."
             : demo
-              ? "For this demo, continue with any Google account to explore all tutor and staff workflows. In actual use, Google OAuth verifies your identity; program staff approve access, and your role and assignments determine which records you can see."
+              ? "Continue with Google or choose Continue as guest to explore all roles. Guest access is only for this demo. In actual use, Google OAuth will be required; other authentication methods can be adapted to the client’s needs. Program staff approve access and assign roles."
               : "Google verifies your identity. Program staff then approve your access and assign your role. Tutors see their assigned students; staff manage the program.",
         ),
       ],
@@ -53,7 +53,7 @@ function pageTour(
         step(
           '[data-tour="persona-staff"]',
           "Explore program management",
-          "Choose Sam to manage tutors and assignments, review activity, and download monthly reports. Leo shows an unassigned tutor; Jordan previews waiting for approval. These are shared fictional accounts, separate from your Google identity.",
+          "Choose Sam to manage tutors and assignments, review activity, and download monthly reports. Leo shows an unassigned tutor; Jordan previews waiting for approval. These are shared fictional accounts for this demo.",
         ),
       ],
     };

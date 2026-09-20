@@ -1,3 +1,4 @@
+import { GuestSignIn } from "@/components/guest-sign-in";
 import { QuickTour } from "@/components/quick-tour";
 import { reviewerDemo } from "@/lib/reviewer-demo";
 import { BookOpen, ArrowRight, Check } from "lucide-react";
@@ -60,10 +61,11 @@ export default async function Login({
               </p>
             </div>
           ) : null}
+          {demo.enabled && configured() && !localDemo() && <GuestSignIn />}
           <div className="login-trust">
             <Check size={15} />{" "}
             {demo.enabled && !localDemo()
-              ? "Sign in to explore the tutor and staff demo."
+              ? "Explore the tutor and staff demo."
               : "Access is approved by your program staff."}
           </div>
           {localDemo() && (

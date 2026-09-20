@@ -1019,6 +1019,10 @@ footer {
   height: 48px !important;
   justify-content: space-between;
 }
+.guest-button {
+  width: 100%;
+  min-height: 48px;
+}
 .google-g {
   font-size: 20px;
 }

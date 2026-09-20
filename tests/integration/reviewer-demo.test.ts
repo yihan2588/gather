@@ -107,3 +107,73 @@ it("grants Google reviewers shared personas without exposing or changing reviewe
     await db.close();
   }
 });
+
+it("limits guest personas to the demo and rejects forged guest metadata", async () => {
+  const db = new PGlite();
+  const guest = crypto.randomUUID();
+  const forged = crypto.randomUUID();
+  try {
+    await migrate(db);
+    await db.query("insert into auth.users(id,is_anonymous) values ($1,true)", [
+      guest,
+    ]);
+    await db.query(
+      "insert into auth.users(id,raw_user_meta_data) values ($1,'{\"is_anonymous\":true}')",
+      [forged],
+    );
+    await db.exec(await readFile("supabase/demo.sql", "utf8"));
+    const query = (uid: string, persona: string, sql: string) =>
+      db.transaction(async (tx) => {
+        await tx.query(
+          "select set_config('request.jwt.claim.sub',$1,true),set_config('request.headers',$2,true)",
+          [uid, JSON.stringify({ "x-gather-persona": persona })],
+        );
+        await tx.exec("set local role authenticated");
+        return tx.query(sql);
+      });
+    expect(
+      (await query(guest, "staff", "select private.actor_id() as id")).rows,
+    ).toEqual([{ id: IDS.sam }]);
+    expect(
+      (await query(guest, "tutor", "select id from public.assignments")).rows,
+    ).toHaveLength(3);
+    expect(
+      (await query(guest, "leo", "select id from public.assignments")).rows,
+    ).toHaveLength(0);
+    expect(
+      (await query(guest, "pending", "select id from public.students")).rows,
+    ).toHaveLength(0);
+    expect(
+      (await query(guest, "staff", "select user_id from public.memberships"))
+        .rows,
+    ).toHaveLength(4);
+    expect(
+      (await query(forged, "staff", "select private.demo_access() as allowed"))
+        .rows,
+    ).toEqual([{ allowed: false }]);
+    await expect(
+      query(guest, "invalid", "select private.actor_id()"),
+    ).rejects.toThrow("Unknown demo account");
+    await db.exec("update private.demo_settings set enabled=false");
+    // Even an accidentally approved guest has no access outside the demo.
+    await db.query(
+      "update public.memberships set role='staff',status='active' where user_id=$1",
+      [guest],
+    );
+    expect(
+      (await query(guest, "staff", "select private.actor_id() as id")).rows,
+    ).toEqual([{ id: null }]);
+    expect(
+      (await query(guest, "staff", "select id from public.students")).rows,
+    ).toHaveLength(0);
+    await expect(
+      query(
+        guest,
+        "staff",
+        `select public.save_student('{"display_name":"Forbidden"}')`,
+      ),
+    ).rejects.toThrow("Staff access required");
+  } finally {
+    await db.close();
+  }
+});

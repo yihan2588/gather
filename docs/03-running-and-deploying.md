@@ -138,3 +138,7 @@ pending approval behavior without altering reviewers' real membership roles.
 The four example Auth rows have no password or OAuth identities. They cannot be
 used for Google login; only a verified Google reviewer can act through them.
 Do not modify the Google OAuth client or rotate credentials to enable this feature.
+
+### Demo guest access
+
+Enable **Allow anonymous sign-ins** in Supabase Authentication → Sign In / Providers for the fictional demo. The login page offers Google or Continue as guest. Guest sessions use Supabase anonymous authentication and the same restricted fictional personas; disabling `private.demo_settings.enabled` hides the button and denies guest access at the database layer. Real deployments should disable anonymous sign-ins and require Google OAuth (or a client-approved authentication integration). Anonymous accounts consume Auth quota and do not expire automatically; review and clean them up as part of demo maintenance.

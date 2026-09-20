@@ -318,7 +318,7 @@ These sources support platform behavior. The application policies, limits, workf
 ### Guided orientation
 
 - Show a short tour on the first visit to each main workflow: sign-in, demo account selection, tutor overview, session recording, staff overview, people, reports, and pending access.
-- The hosted demo sign-in tour explains that any Google account can explore all fictional roles. Real-use copy distinguishes Google identity verification from staff approval and role/assignment authorization. Local preview copy describes its example-account buttons instead.
+- The hosted demo sign-in tour explains that Google sign-in or Continue as guest can explore all fictional roles. Guest access is demo-only; actual use requires Google OAuth, with other methods adaptable to client requirements. Real-use copy distinguishes Google identity verification from staff approval and role/assignment authorization. Local preview copy describes its example-account buttons instead.
 - Highlight the relevant control and place a bubble nearby, with Back, Next/Got it, Skip tour, Escape dismissal, and a persistent Quick tour replay control. Tours describe actions without submitting forms or modifying records.
 - Store versioned completion flags in browser local storage; no email, token, student data, or database writes. Completion is per browser, not synchronized across devices or Google accounts. If storage is unavailable, remember dismissal for the current page session and retain working navigation.
 - Keep tour state separate from authentication and authorization. Normal production mode uses role-appropriate guidance and omits demo-account instructions.

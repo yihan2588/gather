@@ -11,7 +11,7 @@ test("first visit explains demo access, dismisses, remembers, and replays", asyn
   const tour = page.getByRole("dialog");
   await expect(tour).toBeVisible();
   await expect(tour).toContainText("any Google account");
-  await expect(tour).toContainText("program staff approve access");
+  await expect(tour).toContainText("Program staff approve access");
   await page.keyboard.press("Escape");
   await expect(tour).not.toBeVisible();
   await page.reload();

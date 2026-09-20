@@ -34,9 +34,9 @@ function pageTour(
               ? "Explore with your Google account"
               : "Sign in with Google",
           local
-            ? "Choose an example account below to explore the local preview. For this demo, continue with any Google account to try all roles. In actual use, Google verifies identity; program staff approve access, and roles and assignments determine which records each person can see."
+            ? "Choose an example account below to explore the local preview. For this demo, continue with any Google account to try all roles. In actual use, Google OAuth verifies your identity; program staff approve access, and roles and assignments determine which records each person can see."
             : demo
-              ? "For this demo, continue with any Google account to explore all tutor and staff workflows. In actual use, Google verifies your identity; program staff approve access, and your role and assignments determine which records you can see."
+              ? "For this demo, continue with any Google account to explore all tutor and staff workflows. In actual use, Google OAuth verifies your identity; program staff approve access, and your role and assignments determine which records you can see."
               : "Google verifies your identity. Program staff then approve your access and assign your role. Tutors see their assigned students; staff manage the program.",
         ),
       ],
